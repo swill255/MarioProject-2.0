@@ -9,25 +9,25 @@ import java.awt.*;
  */
 public class PhysicalObject {
     /** Line that composes the top of the rectangular object*/
-    private Line top;
+    protected Line top;
 
     /** Line that composes the left side of the rectangular object*/
-    private Line left;
+    protected Line left;
 
     /** Line that composes the bottom of the rectangular object*/
-    private Line bottom;
+    protected Line bottom;
 
     /** Line that composes the right side of the rectangular object*/
-    private Line right;
+    protected Line right;
 
     /** Length of the top and bottom lines*/
-    private double length;
+    protected double length;
 
     /** Length of the right and left lines*/
-    private double height;
+    protected double height;
 
     /** Image in the rectangle of the PhysicalObject*/
-    private Image image;
+    protected Image image;
 
     /**
      * Constructor that with two lines that are the top and left compose an entire PhysicalOBject
@@ -37,9 +37,9 @@ public class PhysicalObject {
     public PhysicalObject(Line length, Line height, Image img) {
         this.top = length;
         this.left = height;
-        Point bottomLeft = new Point(top.getP2().getX(), left.getP1().getY());
-        this.bottom = new Line(height.getP1(), bottomLeft);
-        this.right = new Line(length.getP2(), bottomLeft);
+        Point bottomRight = new Point(top.getP1().getX(), left.getP1().getY());
+        this.bottom = new Line(left.getP1(), bottomRight);
+        this.right = new Line(bottomRight, top.getP2());
         this.length = length.getDistance();
         this.height = height.getDistance();
         this.image = img;
@@ -129,12 +129,14 @@ public class PhysicalObject {
      * @param other PhysicalObject being compared
      * @return true if overlaps and false if otherwise
      */
-    public boolean overlaps(PhysicalObject other) {
-        Line[] sides = {top, right, bottom, left};
-        for(int i = 0; i < sides.length; i ++) {
-            Line cur = sides[i];
-            for(int j = i + 1; j < 4; j++) {
-                if(cur.overlaps(sides[j]) || cur.crosses(sides[j])) {
+    public boolean overlaps(PhysicalObject other){
+        Line[] ourSides = {this.top, this.bottom, this.right, this.left};
+        Line[] theirSides = {other.top, other.bottom, other.right, other.left};
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                Line our = ourSides[i];
+                Line their = theirSides[j];
+                if(our.crosses(their) || our.overlaps(their)) {
                     return true;
                 }
             }
@@ -144,7 +146,7 @@ public class PhysicalObject {
 
     /**
      * Prints the Image over the space taken up by the
-     * PhysicalObject as a GUI (will be MARIO, BLOCK, etc.) 
+     * PhysicalObject as a GUI (will be MARIO, BLOCK, etc.)
      * @param g Graphics parameter that is for the JPanel
      */
     public void paint(Graphics g) {

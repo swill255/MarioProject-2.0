@@ -5,14 +5,10 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class Mario extends PhysicalObject{
-    Point location;
-    double length;
-    double height;
-    Image image;
+    public Point location;
 
     public Mario(Point location, double length, double height, Image image) {
-        super(location, length, height);
-        this.image = image;
+        super(location, length, height, image);
     }
 
     public Point getLocation() {

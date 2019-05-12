@@ -24,24 +24,8 @@ public class Line {
      * @param p2 Point that is right or top
      */
     public Line(Point p1, Point p2) {
-        if(p1.getX() < p2.getX()) {
-            this.p1 = p1;
-            this.p2 = p2;
-        } else if (p1.getX() > p2.getX()) {
-            this.p1 = p2;
-            this.p2 = p1;
-        } else {
-            if(p1.getY() < p2.getY()) {
-                this.p1 = p1;
-                this.p2 = p2;
-            } else {
-                this.p1 = p2;
-                this.p2 = p1;
-            }
-        }
-        this.distance = p1.getDistance(p2);
+        setPs(p1, p2);
     }
-
     /**
      * Getter method that returns to the user p1
      * @return Point p1 that is left or bottom
@@ -61,26 +45,34 @@ public class Line {
     /**
      * Setter that with a input will change the first point
      * will orientate so as to still have everything in correct order
-     * @param p the new Point for the line to orientate from p2
+     * @param p1 the new Point for the line to orientate from p2
+     TODO: Fix param
      */
-    public void setP1(Point p) {
-        Point temp = p2;
-        if(p.getX() < temp.getX()) {
-            this.p1 = p;
-            this.p2 = temp;
-        } else if (p.getX() > temp.getX()) {
-            this.p1 = temp;
-            this.p2 = p;
+    public void setPs(Point p1, Point p2) {
+        double x1 = p1.getX();
+        double x2 = p2.getX();
+        double y1 = p1.getY();
+        double y2 = p2.getY();
+        if(x1 < x2) {
+            this.p1 = p1;
+            this.p2 = p2;
+        } else if (x1 > x2) {
+            this.p1 = p2;
+            this.p2 = p1;
         } else {
-            if(p.getY() < temp.getY()) {
-                this.p1 = p;
-                this.p2 = temp;
+            if(y1 < y2) {
+                this.p1 = p1;
+                this.p2 = p2;
             } else {
-                this.p1 = temp;
-                this.p2 = p;
+                this.p1 = p2;
+                this.p2 = p1;
             }
         }
-        this.distance = p1.getDistance(p2);
+        this.distance = this.p1.getDistance(this.p2);
+    }
+
+    public void setP1(Point p) {
+        setPs(p, this.p2);
     }
 
     /**
@@ -89,25 +81,8 @@ public class Line {
      * @param p the new Point for the Line to orient from p2
      */
     public void setP2(Point p) {
-        Point temp = p1;
-        if(p.getX() > temp.getX()) {
-            this.p1 = temp;
-            this.p2 = p;
-        } else if (p.getX() < temp.getX()) {
-            this.p1 = p;
-            this.p2 = temp;
-        } else {
-            if(p.getY() > temp.getY()) {
-                this.p1 = temp;
-                this.p2 = p;
-            } else {
-                this.p1 = p;
-                this.p2 = temp;
-            }
-        }
-        this.distance = p1.getDistance(p2);
+        setPs(this.p1, p);
     }
-
     /**
      * Returns to the user the distance between p1 and p2
      * @return double instance variable distance

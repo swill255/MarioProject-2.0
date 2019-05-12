@@ -3,10 +3,10 @@
 public class MarioLogisticsTester {
 
     public static void main(String[] args) {
-        Point p1 = new Point(-3,0);
-        Point p2 = new Point(5,0);
-        Point p3 = new Point(2,-2);
-        Point p4 = new Point(2,5);
+        Point p1 = new Point(-3,1);
+        Point p2 = new Point(5,1);
+        Point p3 = new Point(-12,1);
+        Point p4 = new Point(-4,1);
 
         if(p1.isBelow(p2)){
             System.out.println("p1 is below p2 and the distance between them is " + p1.getDistance(p2));
@@ -31,12 +31,17 @@ public class MarioLogisticsTester {
         }
         System.out.println(l1.getP1().getX());
         System.out.println(l1.getP2().getX());
+
         if(l1.getP1().getX() < l1.getP2().getX()) {
             System.out.println("The points oriented correctly");
         }
 
         if(l1.crosses(l2)) {
             System.out.println("These bitches cross");
+        }
+
+        if(l1.overlaps(l2)) {
+            System.out.println("They be overlapping ");
         }
     }
 }
